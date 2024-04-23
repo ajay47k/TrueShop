@@ -5,8 +5,12 @@ import { useCreateOrderMutation } from "./ordersApiSlice"
 export const productApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getProducts:builder.query({
-            query:()=>({
-                url:'api/products'
+            query:({keyword,pageNumber})=>({
+                url:'api/products',
+                params:{
+                    keyword,
+                    pageNumber
+                }
             }),
             provideTags:['Products'],
             keepUnusedDataFor:5
@@ -52,8 +56,27 @@ export const productApiSlice = apiSlice.injectEndpoints({
             method:'DELETE'
          })   
         }
+    }),
+    createReview:builder.mutation({
+        query:(data)=>
+        {
+            // console.log("Here we delete")
+         return ({
+            url:`api/products/${data.productId}/reviews`,
+            method:'POST',
+            body:data
+         })
+        },
+        invalidatesTags:['Products']
+    }),
+    getTopProducts:builder.query({
+        query:()=>({
+            url:'api/products/top',
+            method:'GET'
+        }),
+        keepUnusedDataFor:5,
     })
 })
 })
-export const {useGetProductsQuery,useGetProductDetailsQuery,useCreateProductMutation,useUpdateProductMutation,useUploadProductImageMutation,useDeleteProductMutation} = productApiSlice
+export const {useGetTopProductsQuery,useGetProductsQuery,useGetProductDetailsQuery,useCreateProductMutation,useUpdateProductMutation,useUploadProductImageMutation,useDeleteProductMutation,useCreateReviewMutation} = productApiSlice
 // THis is not imported to the store because it is a child of the apiSlice and is already being used in the store

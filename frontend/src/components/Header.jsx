@@ -7,7 +7,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { useLogoutMutation } from '../redux/slices/usersApiSlice'
 import { logout } from './../redux/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
-
+import SearchBox from './SearchBox'
 function Header() {
     const { cartItems } = useSelector((state) => state.cart)
     const {userInfo}= useSelector((state) => state.auth)
@@ -37,6 +37,7 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className='ms-auto'>
+                    <SearchBox/>
                     <LinkContainer to='/cart'>
                     <Nav.Link href="/cart"><FaShoppingCart/>Cart
                     {
